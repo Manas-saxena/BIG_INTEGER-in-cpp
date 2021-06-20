@@ -76,6 +76,59 @@ class BIG_INT{
     friend ostream & operator << (ostream& out ,const BIG_INT & big);
     friend istream & operator >> (istream& in ,  BIG_INT & big);
 
+    // add and subtract
+    static string add (string a , string b)
+    {
+        int carry =0;
+        string answer;
+        int asize = a.size();
+        int bsize = b.size();
+        int i=asize-1;
+        int j=bsize-1;
+        while(i>=0 and j>=0)
+        {
+            int result = (a[i]-'0') + (b[j]-'0') +carry ;  
+            char to_push = ('0'+ (result%10));
+            result /=10;
+            carry =  result%10;
+            answer.push_back(to_push);
+            i--;
+            j--;
+
+        }
+
+        while(i>=0)
+        {
+            int result = (a[i] - '0') + carry;
+            char to_push = ('0' +(result%10));
+            result/=10;
+            carry = result %10;
+            answer.push_back(to_push);
+            i--;
+        }
+
+        while(j>=0)
+        {
+            int result = (b[j] - '0') + carry;
+            char to_push = ('0' + (result % 10));
+            result /= 10;
+            carry = result % 10;
+            answer.push_back(to_push);
+            j--;
+        }
+        if(carry >0)
+        {
+            char to_push = ('0' + carry );
+            answer.push_back(to_push);
+        }
+        reverse(answer.begin() , answer.end());
+        return answer ; 
+    }
+
+    string operator + ( BIG_INT const & bigb)
+    {
+        return add(this->num  , bigb.num);
+    }
     
 };
 
@@ -86,7 +139,7 @@ ostream & operator << (ostream &out, const BIG_INT &big)
 }
 
 istream & operator >> (istream &in ,  BIG_INT &big)
-{
+{   
     in>>big.num;
     return in;
 }

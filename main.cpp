@@ -5,7 +5,11 @@ using namespace std;
 
 int main()
 {
-  BIG_INT big ;
-  cin>>big;
-  cout<<big;
+  BIG_INT a;
+  cin>>a;
+
+  BIG_INT b;
+  cin>>b;
+  string ans = a+b;
+  cout<<ans<<endl;
 }
