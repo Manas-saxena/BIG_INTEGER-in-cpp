@@ -73,4 +73,20 @@ class BIG_INT{
     }
 
     //friend function for cin and cout
+    friend ostream & operator << (ostream& out ,const BIG_INT & big);
+    friend istream & operator >> (istream& in ,  BIG_INT & big);
+
+    
 };
+
+ostream & operator << (ostream &out, const BIG_INT &big)
+{
+    out<<big.num;
+    return out;
+}
+
+istream & operator >> (istream &in ,  BIG_INT &big)
+{
+    in>>big.num;
+    return in;
+}
