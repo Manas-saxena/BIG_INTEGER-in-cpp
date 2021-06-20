@@ -5,7 +5,10 @@ using namespace std;
 
 int main()
 {
-  BIG_INT big="123456";
+  BIG_INT big;
+    string num ;
+    cin>>num;
+    big =num;
     BIG_INT big2=big;
     big2 = 2000;
   cout<<big.get_num();

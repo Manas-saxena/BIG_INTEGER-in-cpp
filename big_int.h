@@ -7,6 +7,8 @@ class BIG_INT{
      string num ;
     
     public:
+
+    //consturctors 
     BIG_INT(){
         num="0";
     }
@@ -51,9 +53,15 @@ class BIG_INT{
         }
        num = big.get_num();
     }
+
+    // get num and set num
+    void set_num(string number) {
+        num = number;
+    }
     string get_num() const{
         return num ;
     }
+    //check for valid input 
     bool input_valid(string number)
     {
         for (int i = 0; i < number.length(); ++i)
@@ -63,4 +71,6 @@ class BIG_INT{
         }
         return true;
     }
+
+    //friend function for cin and cout
 };
