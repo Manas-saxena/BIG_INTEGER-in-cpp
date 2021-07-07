@@ -10,6 +10,7 @@ int main()
 
   BIG_INT b;
   cin>>b;
-  string ans = a+b;
-  cout<<ans<<endl;
+   a*=b;
+   cout<<a<<endl;
+ 
 }

@@ -95,7 +95,7 @@ class BIG_INT{
             number.erase(0, i);
         return number;
     }
-    static string maxcompare(string a , string b )
+    static string maxcompare(string a , string b ) 
     {
         string answer = "";
         int i;
@@ -232,7 +232,7 @@ class BIG_INT{
         return answer ; 
     }
 
-    static string subtract(string a , string b )
+    static string subtract(string a , string b ) 
     {
         string answer = "", ans, temp;
         int carry = 0, i, j, k, y = 0, flag = 0, flag1 = 0;
@@ -328,17 +328,63 @@ class BIG_INT{
         }
         return answer;
     }
+   static string multiply (string a , string b) 
+    {
+        int flag = 0;
+        int m = a.length();
+        int n = b.length();
+        int A[m + n] = {0};
+        for (int i = m - 1; i >= 0; i--)
+        {
+            for (int j = n - 1; j >= 0; j--)
+            {
+                int mul = (a[i] - '0') * (b[j] - '0');
+                int sum = A[i + j + 1] + mul;
+                A[i + j] += sum / 10;
+                A[i + j + 1] = sum % 10;
+            }
+        }
 
-    string operator - (BIG_INT const & bigb)
+        string answer = "";
+        for (int i = 0; i < m + n; i++)
+        {
+            if (A[i] == 0 && flag == 0)
+            {
+            }
+            else if (A[i] != 0)
+                flag = 1;
+
+            if (flag == 1)
+               answer += (char)(A[i] + 48);
+        }
+        if (answer.length() == 0)
+           answer = "0";
+
+        return answer;
+    }
+    string operator - (BIG_INT const & bigb) const
     {
         return subtract(this->num , bigb.num);
     }
-    string operator + ( BIG_INT const & bigb)
+    void operator -=(BIG_INT const & bigb)
+    {
+        this->num = subtract (this->num , bigb.num);
+    }
+    string operator + ( BIG_INT const & bigb) const
     {
         return add(this->num  , bigb.num);
     }
-    
-
+    void operator +=(BIG_INT const & bigb)
+    {
+        this->num =add(this->num , bigb.num);
+    }
+    string operator * (BIG_INT const &bigb) const
+    {
+        return multiply(this->num , bigb.num);
+    }
+    void operator*=(BIG_INT const &bigb){
+        this->num = multiply(this->num , bigb.num);
+    }
 };
 
 ostream & operator << (ostream &out, const BIG_INT &big)
