@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 
 using namespace std;
-
+#define pow_big BIG_INT::power_big
 class BIG_INT{
     private:
      string num ;
@@ -362,7 +362,69 @@ class BIG_INT{
 
         return answer;
     }
-    string operator - (BIG_INT const & bigb) const
+    static string power(string a , string b)
+    {
+        if(b == "0")
+        {
+            return "1";
+        }
+        else if (a == "0")
+        {
+            if (b[0] == '-')
+                return to_string((long long int)std::pow(0, -5));
+            return "0";
+        }
+        else if (a[0] == '-' && b[0] == '-')
+        {
+            if (a == "-1" && b == "-1")
+            {
+                return "-1";
+            }
+            else if (a == "-1")
+            {
+                if ((((int)b[b.length() - 1]) - 48) & 1)
+                {
+                    return "-1";
+                }
+                else
+                {
+                    return "1";
+                }
+            }
+            else
+            {
+                return "0";
+            }
+        }
+        else if (a[0] == '-')
+        {
+            if ((((int)b[b.length() - 1]) - 48) & 1)
+                return '-' + power(a.erase(0, 1), b);
+            return power(a.erase(0, 1), b);
+        }
+        else if (b[0] == '-')
+        {
+            if (a == "1")
+            {
+                return a;
+            }
+            else
+            {
+                return "0";
+            }
+        }
+        else
+        {
+            string init_a = a;
+            while (b != "1")
+            {
+                a = multiply(a, init_a);
+                b = subtract(b, "1");
+            }
+            return a;
+        }
+    }
+    BIG_INT operator - (BIG_INT const & bigb) const
     {
         return subtract(this->num , bigb.num);
     }
@@ -370,7 +432,7 @@ class BIG_INT{
     {
         this->num = subtract (this->num , bigb.num);
     }
-    string operator + ( BIG_INT const & bigb) const
+    BIG_INT operator+(BIG_INT const &bigb) const
     {
         return add(this->num  , bigb.num);
     }
@@ -378,12 +440,66 @@ class BIG_INT{
     {
         this->num =add(this->num , bigb.num);
     }
-    string operator * (BIG_INT const &bigb) const
+    BIG_INT operator*(BIG_INT const &bigb) const
     {
         return multiply(this->num , bigb.num);
     }
     void operator*=(BIG_INT const &bigb){
         this->num = multiply(this->num , bigb.num);
+    }
+
+    BIG_INT operator++ ()
+    {
+        string temp = "1";
+        this->num = add(this->num ,temp);
+        return *this;
+    }
+
+    BIG_INT operator ++ (int)
+    {
+        BIG_INT prev ;
+        prev = *this;
+        string temp = "1";
+        this->num = add(this->num , temp);
+        return prev;
+    }
+    BIG_INT operator --()
+    {
+        string temp ="1";
+        this->num = subtract(this->num , temp);
+        return *this;
+    }
+
+    BIG_INT operator -- (int)
+    {
+        BIG_INT prev = *this;
+        string temp = "1";
+        this->num = subtract(this->num , temp);
+        return prev;
+    }
+
+    bool operator ==( BIG_INT const & bigb)
+    {
+        if(this->num == bigb.num)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+    bool operator != (BIG_INT const &bigb)
+    {
+        return this->num != bigb.num;
+    }
+
+    static BIG_INT power_big(BIG_INT const &a, BIG_INT const  &b)
+    {
+        BIG_INT temp ;
+        temp.num = power(a.num , b.num);
+        return temp;
     }
 };
 

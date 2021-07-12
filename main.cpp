@@ -10,7 +10,8 @@ int main()
 
   BIG_INT b;
   cin>>b;
-   a*=b;
-   cout<<a<<endl;
- 
+  
+   BIG_INT c = pow_big(a,b);
+   
+ cout<<c.get_num()<<endl;
 }
