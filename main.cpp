@@ -11,7 +11,8 @@ int main()
   BIG_INT b;
   cin>>b;
   
-   BIG_INT c = pow_big(a,b);
-   
- cout<<c.get_num()<<endl;
+     string s ="1234";
+   BIG_INT c = fact_big(s);
+
+  cout<<c<<endl;
 }

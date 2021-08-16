@@ -2,6 +2,7 @@
 
 using namespace std;
 #define pow_big BIG_INT::power_big
+#define fact_big BIG_INT::factorial_big
 class BIG_INT{
     private:
      string num ;
@@ -62,7 +63,7 @@ class BIG_INT{
         return num ;
     }
     //check for valid input 
-    bool input_valid(string number)
+    static bool input_valid(string number)
     {
         int i = 0;
         if(number[0] == '-' and number.size()!=1)
@@ -500,6 +501,78 @@ class BIG_INT{
         BIG_INT temp ;
         temp.num = power(a.num , b.num);
         return temp;
+    }
+
+    static string factorial(int n )
+    {
+        int i = 2;
+        int j = 0;
+        int len = 1;
+        int A[100000] = {0};
+        A[0] = 1;
+        int num = 0;
+        while (i <= n)
+        {
+            j = 0;
+            num = 0;
+            while (j < len)
+            {
+                A[j] = A[j] * i;
+                A[j] = A[j] + num;
+                num = A[j] / 10;
+                A[j] = A[j] % 10;
+                j++;
+            }
+            while (num != 0)
+            {
+                A[len] = num % 10;
+                num = num / 10;
+                len++;
+            }
+            i++;
+        }
+        len--;
+        string y = "";
+        while (len >= 0)
+        {
+            y += (char)(A[len] + '0');
+            len = len - 1;
+        }
+        return y;
+    }
+
+    static BIG_INT factorial_big(int n)
+    {
+        BIG_INT ans ;
+        ans = factorial(n);
+        return ans;
+    }
+
+    static BIG_INT factorial_big( const BIG_INT&  n)
+    {
+        BIG_INT ans ;
+        string s = n.num;
+        stringstream convertnum(s);
+        int p =0;
+        convertnum>>p;
+        ans= factorial(p);
+        return  ans ;
+    }
+
+    static BIG_INT factorial_big(string s)
+    {
+        if (!input_valid(s))
+        {
+            cerr << "Invalid Input.. Please Use Valid BIGINTEGER" << endl;
+            exit(0);
+        }
+
+        BIG_INT ans ;
+        stringstream convertnum(s);
+        int p = 0;
+        convertnum >> p;
+        ans = factorial(p);
+        return ans;
     }
 };
 
