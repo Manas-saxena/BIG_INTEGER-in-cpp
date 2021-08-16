@@ -3,6 +3,10 @@
 using namespace std;
 #define pow_big BIG_INT::power_big
 #define fact_big BIG_INT::factorial_big
+#define max BIG_INT::maxcompare
+#define min BIG_INT::mincompare
+#define abs BIG_INT::abs_big
+#define rev BIG_INT::rev_big
 class BIG_INT{
     private:
      string num ;
@@ -98,6 +102,11 @@ class BIG_INT{
     }
     static string maxcompare(string a , string b ) 
     {
+        if (!input_valid(a) || !input_valid(b))
+        {
+            cerr << "Invalid Input.. Please Use Valid BIGINTEGER" << endl;
+            exit(0);
+        }
         string answer = "";
         int i;
         if (a[0] == '-' and b[0] != '-')
@@ -160,6 +169,51 @@ class BIG_INT{
                 }
             }
         }
+    }
+    static string mincompare(string s1, string s2)
+    {
+        if(!input_valid(s1) || !input_valid(s2))
+        {
+          cerr << "Invalid Input.. Please Use Valid BIGINTEGER" << endl;
+                exit(0);
+          
+        }
+        string ans;
+        ans = maxcompare(s1, s2);
+        if (ans == s1)
+        {
+            return s2;
+        }
+        return s1;
+    }
+
+    static string maxcompare(int a , int b)
+    {
+        ostringstream convert;
+        convert << a;
+        string s1 = convert.str();
+        convert<<b;
+        string s2 = convert.str();
+
+        return maxcompare(s1 ,s2);
+    }
+    static string maxcompare(const BIG_INT& a, const BIG_INT& b)
+    {
+        return maxcompare(a.get_num(), b.get_num());
+    }
+    static string mincompare(int a, int b)
+    {
+        ostringstream convert;
+        convert << a;
+        string s1 = convert.str();
+        convert << b;
+        string s2 = convert.str();
+
+        return mincompare(s1, s2);
+    }
+    static string mincompare(const BIG_INT &a, const BIG_INT &b)
+    {
+        return mincompare(a.get_num(), b.get_num());
     }
     // add and subtract
     static string add (string a , string b)
@@ -572,6 +626,30 @@ class BIG_INT{
         int p = 0;
         convertnum >> p;
         ans = factorial(p);
+        return ans;
+    }
+    static BIG_INT abs_big( BIG_INT &num)
+    {
+        string ansstring =num.get_num();
+        BIG_INT ans;
+        if(ansstring.size()!=0 and ansstring[0] =='-')
+        {
+            ans = ansstring.substr(1);
+            return ans;
+        }
+        else
+        {
+            ans = ansstring;
+            return ans ;
+        }
+        
+    }
+    static BIG_INT rev_big(BIG_INT num)
+    {
+        string s2 = "", s1 = num.get_num();
+        for (int i = s1.length() - 1; i >= 0; i--)
+            s2 += s1[i];
+        BIG_INT ans(s2);
         return ans;
     }
 };

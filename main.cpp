@@ -11,8 +11,5 @@ int main()
   BIG_INT b;
   cin>>b;
   
-     string s ="1234";
-   BIG_INT c = fact_big(s);
-
-  cout<<c<<endl;
+     cout<<rev(b);
 }
