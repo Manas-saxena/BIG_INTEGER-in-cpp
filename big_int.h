@@ -7,6 +7,7 @@ using namespace std;
 #define min BIG_INT::mincompare
 #define abs BIG_INT::abs_big
 #define rev BIG_INT::rev_big
+#define n_count BIG_INT::count_num
 class BIG_INT{
     private:
      string num ;
@@ -417,6 +418,54 @@ class BIG_INT{
 
         return answer;
     }
+    static string division(string s1 , long long div)
+    {
+        string result;
+        int index = 0;
+        long long int temp = s1[index] - '0';
+        while (temp < div)
+        {
+            temp = temp * 10 + (s1[++index] - '0');
+
+            if (index >= s1.length())
+                break;
+        }
+
+        while (s1.length() > index)
+        {
+            result += (temp / div) + '0';
+            temp = (temp % div) * 10 + s1[++index] - '0';
+        }
+
+        if (result.length() == 0)
+            return "0";
+
+        return result;
+    }
+    static string division(string s1 , int div )
+    {
+        string result;
+        int index = 0;
+        int temp = s1[index] - '0';
+        while (temp < div)
+        {
+            temp = temp * 10 + (s1[++index] - '0');
+
+            if (index >= s1.length())
+                break;
+        }
+
+        while (s1.length() > index)
+        {
+            result += (temp / div) + '0';
+            temp = (temp % div) * 10 + s1[++index] - '0';
+        }
+
+        if (result.length() == 0)
+            return "0";
+
+        return result;
+    }
     static string power(string a , string b)
     {
         if(b == "0")
@@ -501,6 +550,32 @@ class BIG_INT{
     }
     void operator*=(BIG_INT const &bigb){
         this->num = multiply(this->num , bigb.num);
+    }
+
+    BIG_INT operator /(BIG_INT const & bigb )
+    {
+        BIG_INT ans ;
+        string s1 = num ;
+        string s2 = bigb.num;
+
+        stringstream convertnum(s2);
+
+        long long int div = 0;
+        convertnum>>div;
+
+        ans.num = division(s1,div);
+
+        return ans;
+    }
+
+    void operator /=(BIG_INT const & bigb )
+    {
+        string s2 = bigb.num;
+        stringstream convertnum(s2);
+        long long int div =0;
+        convertnum>>div;
+        this->num = division(this->num , div );
+
     }
 
     BIG_INT operator++ ()
@@ -651,6 +726,73 @@ class BIG_INT{
             s2 += s1[i];
         BIG_INT ans(s2);
         return ans;
+    }
+
+    static int count_num(BIG_INT biga, int n)
+    {
+        char c = (char)(n + '0');
+        int counti = 0;
+        for (int i = 0; i < biga.num.length(); i++)
+        {
+            if (biga.num[i] == c)
+                counti++;
+        }
+        return counti;
+    }
+
+    static string removeZero(string str)
+    {
+        int i = 0, flag = 0;
+        if (str[0] == '-')
+        {
+            flag = 1;
+            i++;
+        }
+        while (str[i] == '0')
+            i++;
+        if (flag)
+            str.erase(1, i);
+        else
+            str.erase(0, i);
+        return str;
+    }
+
+    static BIG_INT eraseBhimInteger(BIG_INT biga, int n)
+    {
+        char c = (char)(n + '0');
+        string s2 = "";
+        int counti = 0;
+        for (int i = 0; i < biga.num.length(); i++)
+        {
+            if (biga.num[i] != c)
+                s2 += biga.num[i];
+        }
+        s2 = removeZero(s2);
+        if (s2 == "" or s2 == "-")
+        {
+            BIG_INT bigb(0);
+            return bigb;
+        }
+        else
+        {
+            BIG_INT bigb(s2);
+            return bigb;
+        }
+    }
+    static bool isPaliBhimInteger(BIG_INT const & biga)
+    {
+        string s1 = biga.num;
+        int i = 0, j = s1.length() - 1;
+        if (s1[0] == '-')
+            i++;
+        while (i < j)
+        {
+            if (s1[i] != s1[j])
+                return false;
+            i++;
+            j--;
+        }
+        return true;
     }
 };
 
