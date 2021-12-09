@@ -8,6 +8,8 @@ using namespace std;
 #define abs BIG_INT::abs_big
 #define rev BIG_INT::rev_big
 #define n_count BIG_INT::count_num
+#define check_palin BIG_INT::isPalin
+#define n_erase BIG_INT:: erase_num 
 class BIG_INT{
     private:
      string num ;
@@ -86,6 +88,7 @@ class BIG_INT{
     //friend function for cin and cout
     friend ostream & operator << (ostream& out ,const BIG_INT & big);
     friend istream & operator >> (istream& in ,  BIG_INT & big);
+    // to remove prec. zeros
     static string removezero(string number){
         int i = 0, flag = 0;
         if (number[0] == '-')
@@ -757,7 +760,7 @@ class BIG_INT{
         return str;
     }
 
-    static BIG_INT eraseBhimInteger(BIG_INT biga, int n)
+    static BIG_INT erase_num(BIG_INT biga, int n)
     {
         char c = (char)(n + '0');
         string s2 = "";
@@ -779,7 +782,7 @@ class BIG_INT{
             return bigb;
         }
     }
-    static bool isPaliBhimInteger(BIG_INT const & biga)
+    static bool isPalin(BIG_INT const & biga)
     {
         string s1 = biga.num;
         int i = 0, j = s1.length() - 1;

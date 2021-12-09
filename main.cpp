@@ -8,10 +8,12 @@ int main()
   BIG_INT a;
   cin>>a;
 
-  BIG_INT b;
-  cin>>b;
+  
+  BIG_INT b=a;
+  // cin>>b;
 
   BIG_INT c;
+  // c.set_num();
 
   c = a/b;
 
